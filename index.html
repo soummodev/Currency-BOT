@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="topbar">
+        <h2>💱 Currency Bot</h2>
+         <div id="topbtns">
+        <button id="historybtn">📜 History</button>
+        <button id="clearbtn">🗑️ Clear</button>
+      </div>
+      </div>
+        <div id="historypanel" class="hidden">
+      <p id="historytitle">📜 Chat History</p>
+      <div id="historylist"></div>
+    </div>
+       <div id="chatbox"></div>
+       <div id="input">
+        <input type="text" id="userinput" placeholder="Ask about currency!">
+        <button id="button">Send</button>
+       </div>
+
+       <p id="status"></p>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
