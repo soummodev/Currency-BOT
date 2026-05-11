@@ -8,6 +8,7 @@ const makeParser = (pattern, input) => (input) => {
 const whatIsPattern = /what\s+is\s+(?:the\s+)?currency\s+of\s+([a-z\s]+)/i;
 const convertPattern =/convert\s+([\d.]+)\s+([a-z]+)\s+(?:to|in)\s+([a-z\s]+)/i;
 
+
 export const parseWhatIs = makeParser(whatIsPattern, (match) =>( {
     type: "WHAT_IS",
         country: match[1].trim().toLowerCase(),
