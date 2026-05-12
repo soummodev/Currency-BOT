@@ -6,7 +6,7 @@ const rateCache = (() => {
         set: (code,data) => {cache[code] =data}
     }
     
-})
+})()
 export async function getRates(baseCode) {
     const cached = rateCache.get(basecode);
     if (cached) return cached;
@@ -26,7 +26,7 @@ export function convertCurrency(amount, fromCode, toCode) {
         try {
             const rates = await getRates(fromCode)
             const rate = rates[toCode]
-            if (!rate) reject(`Rate not found for ${toCode}`);
+            if (!rate) return  reject(`Rate not found for ${toCode}`);
         resolve({result: (amount * rate).toFixed(4),rate})
         
         }

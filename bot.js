@@ -2,7 +2,7 @@ import { detectIntent, findCountry } from "./parser.js"
 import { currencymap, currencycode } from "./currencies.js"
 import { convertCurrency } from "./api.js"
 
-export function creatBot() {
+export function createBot() {
     const countryKeys = Object.keys(currencymap)
 
     function resolveCode(input) {

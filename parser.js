@@ -1,6 +1,6 @@
 import { currencymap } from "./currencies.js"
 
-const makeParser = (pattern, input) => (input) => {
+const makeParser = (pattern, handler) => (input) => {
     const match = input.match(pattern)
     return match ? handler(match) : null;
 }
