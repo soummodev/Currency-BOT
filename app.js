@@ -2,7 +2,7 @@ import { createBot } from "./bot.js"
 import { createView } from "./view.js"
 import { store } from "./store.js"
 
-const bot = createBot()
+const bot = createBot();
 const view = createView()
 
 const messageQueue = []
@@ -15,7 +15,7 @@ function enqueue(task) {
 
 async function processQueue() {
   if (isProcessing || messageQueue.length === 0) return
-  isProcessing = true
+  isProcessing = true;
   const task = messageQueue.shift()
   await task()
   isProcessing = false
@@ -25,22 +25,26 @@ async function processQueue() {
 const handleSend = (() => {
   return async function () {
     const userText = view.getValue()
-    if (!userText) return
-    view.clearInput()
+    if (!userText) return;
+    view.clearInput();
     store.addMessage("user", userText)
-    view.appendMessage("user", userText);
-    view.setStatus("Bot is thinking.....");
+    view.appendMessage("user", userText)
+    view.setStatus("Bot is thinking.....")
     enqueue(async () => {
-      const reply = await bot.respond(userText);
+      const reply = await bot.respond(userText)
       store.addMessage("bot", reply)
       view.appendMessage("bot", reply)
       view.clearStatus();
-    });
-  };
-})();
+    })
+  }
+})()
+
+document.getElementById("userinput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") handleSend();
+});
 
 document.getElementById("input").addEventListener("click", (e) => {
-  if (e.target.id === "button") handleSend();
+  if (e.target.id === "button") handleSend()
 });
 
 document.getElementById("clearbtn").addEventListener("click", () => {
@@ -52,38 +56,31 @@ document.getElementById("clearbtn").addEventListener("click", () => {
 document.getElementById("historybtn").addEventListener("click", () => {
   const panel = document.getElementById("historypanel")
   const historyList = document.getElementById("historylist")
-  const isHidden = panel.classList.contains("hidden");
+  const isHidden = panel.classList.contains("hidden")
 
   if (isHidden) {
     historyList.innerHTML = "";
-    const { history } = store.getState();
+    const { history } = store.getState()
     if (history.length === 0) {
       historyList.innerHTML =
-        "<p style='color:#555;font-size:12px'>No history yet.</p>";
+        "<p style='color:#555;font-size:12px'>No history yet.</p>"
     } else {
       history.forEach(({ role, text }) => {
         const div = document.createElement("div");
-        div.className = `h-msg ${role === "user" ? "h-user" : "h-bot"}`;
+        div.className = `h-msg ${role === "user" ? "h-user" : "h-bot"}`
         div.innerHTML = text
           .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
           .replace(/\n/g, "<br>");
-        historyList.appendChild(div);
+        historyList.appendChild(div)
       });
     }
-    panel.classList.remove("hidden");
+    panel.classList.remove("hidden")
   } else {
-    panel.classList.add("hidden");
+    panel.classList.add("hidden")
   }
 });
 
-(function loadHistory() {
-  const { history } = store.getState();
-  history.forEach(({ role, text }) => view.appendMessage(role, text));
-})();
-
-if (!store.getState().history.length) {
-  view.appendMessage(
-    "bot",
-    "👋 Hello! I'm **Currency Bot**.\nTry:\n• *What is the currency of Japan?*\n• *Convert 1000 BDT to USD*",
-  );
-}
+view.appendMessage(
+  "bot",
+  "👋 Hello! I'm **Currency Bot**.\nTry:\n• *What is the currency of Japan?*\n• *Convert 1000 BDT to USD*",
+);
